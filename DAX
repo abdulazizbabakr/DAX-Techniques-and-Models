@@ -1,0 +1,17 @@
+DAX
+End of Month = EOMONTH('Calendar'[Date],0)
+Weekend = IF('Calendar'[Day Name] = "Saturday" || 'Calendar'[Day Name] = "Sunday","Y","N")
+Price Adjustment (%) = GENERATESERIES(-1, 1, 0.1) – parameter
+Price Adjustment (%) Value = SELECTEDVALUE('Price Adjustment (%)'[Price Adjustment (%)], 0)
+Avg Retail Price = AVERAGE(Products[product_retail_price])
+Adjusted Price = [Avg Retail Price] * (1+'Price Adjustment (%)'[Price Adjustment (%) Value])
+All Returns = CALCULATE([Total Returns], ALL(Return_Data))
+Last Month Returns = CALCULATE([Total Returns], DATEADD('Calendar'[Date],-1,MONTH))
+60-Days Revenue = CALCULATE([Total Revenue], DATESINPERIOD('Calendar'[Date],MAX('Calendar'[Date]),-60,DAY))
+YTD Revenue = CALCULATE([Total Revenue], DATESYTD('Calendar'[Date]))
+High Ticket Orders = CALCULATE([Total Orders] , FILTER(AW_Product_Lookup, [Avg Retail Price]>[Overall Avg Price]))
+
+
+
+
+
